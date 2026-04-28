@@ -21,3 +21,25 @@
 2026-04-27 17:15:12,885 - INFO - Taxa de sucesso: 100.0%
 2026-04-27 17:15:12,885 - INFO - ============================================================
 2026-04-27 17:15:12,885 - INFO - Processamento concluído com sucesso!
+2026-04-28 10:26:41,035 - INFO - Diretórios criados/verificados: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados, C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx
+2026-04-28 10:26:41,038 - INFO - Total de 2 participantes extraídos do CSV
+2026-04-28 10:26:41,039 - INFO - Iniciando geração de 2 certificados...
+2026-04-28 10:26:41,039 - INFO - [1/2] Gerando certificado para: Jairo Rodrigues Trancoso Junior
+2026-04-28 10:26:41,090 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx\Jairo_Rodrigues_Trancoso_Junior_temp.pptx
+2026-04-28 10:26:41,147 - INFO - Could not import comtypes.gen._91493440_5A91_11CF_8700_00AA0060263B_0_2_12: No module named 'comtypes.gen._91493440_5A91_11CF_8700_00AA0060263B_0_2_12'
+2026-04-28 10:26:41,165 - INFO - # Generating comtypes.gen._91493440_5A91_11CF_8700_00AA0060263B_0_2_12
+2026-04-28 10:26:44,890 - INFO - # Generating comtypes.gen.PowerPoint
+2026-04-28 10:26:44,902 - INFO - Could not import comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0: No module named 'comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0'
+2026-04-28 10:26:44,903 - INFO - # Generating comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0
+2026-04-28 10:26:44,994 - INFO - # Generating comtypes.gen.stdole
+2026-04-28 10:26:45,094 - INFO - Could not import comtypes.gen._2DF8D04C_5BFA_101B_BDE5_00AA0044DE52_0_2_8: No module named 'comtypes.gen._2DF8D04C_5BFA_101B_BDE5_00AA0044DE52_0_2_8'
+2026-04-28 10:26:45,096 - INFO - # Generating comtypes.gen._2DF8D04C_5BFA_101B_BDE5_00AA0044DE52_0_2_8
+2026-04-28 10:26:48,810 - INFO - # Generating comtypes.gen.Office
+2026-04-28 10:26:49,430 - INFO - Could not import comtypes.gen._0002E157_0000_0000_C000_000000000046_0_5_3: No module named 'comtypes.gen._0002E157_0000_0000_C000_000000000046_0_5_3'
+2026-04-28 10:26:49,431 - INFO - # Generating comtypes.gen._0002E157_0000_0000_C000_000000000046_0_5_3
+2026-04-28 10:26:49,709 - INFO - # Generating comtypes.gen.VBIDE
+2026-04-28 10:26:51,325 - INFO - PDF criado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados\Certificado_Jairo_Rodrigues_Trancoso_Junior.pdf
+2026-04-28 10:26:54,191 - INFO - [2/2] Gerando certificado para: Luciane Zardini Passamai
+2026-04-28 10:26:54,225 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx\Luciane_Zardini_Passamai_temp.pptx
+2026-04-28 10:26:56,408 - INFO - PDF criado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados\Certificado_Luciane_Zardini_Passamai.pdf
+2026-04-28 10:26:58,937 - INFO - Progresso: 2/2 certificados gerados com sucesso

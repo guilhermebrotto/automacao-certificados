@@ -19,6 +19,8 @@ from pathlib import Path
 import re
 import logging
 from datetime import datetime
+from dataclasses import dataclass
+from typing import Callable, Optional
 
 try:
     from pptx import Presentation
@@ -33,7 +35,7 @@ except ImportError:
     print("Será tentada apenas a conversão PPTX sem PDF.")
     CreateObject = None
 
-# Caminhos
+# Caminhos base (usados pelo CLI e pelo logging)
 BASE_DIR = Path(__file__).parent
 LOGS_DIR = BASE_DIR / "logs"
 
@@ -50,21 +52,25 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
-CSV_FILE = BASE_DIR / "relatorio.csv"
-TEMPLATE_PPTX = BASE_DIR / "modelo_certificado.pptx"
-OUTPUT_DIR = BASE_DIR / "certificados_gerados"
-TEMP_DIR = BASE_DIR / ".temp_pptx"
-LOGS_DIR = BASE_DIR / "logs"
 
 
-def create_directories():
+@dataclass
+class CertificateConfig:
+    csv_file: Path
+    template_pptx: Path
+    output_dir: Path
+    temp_dir: Path
+    progress_callback: Optional[Callable[[int, int, str], None]] = None
+
+
+def create_directories(config: CertificateConfig):
     """Cria diretórios necessários."""
-    OUTPUT_DIR.mkdir(exist_ok=True)
-    TEMP_DIR.mkdir(exist_ok=True)
-    logger.info(f"Diretórios criados/verificados: {OUTPUT_DIR}, {TEMP_DIR}")
+    config.output_dir.mkdir(exist_ok=True)
+    config.temp_dir.mkdir(exist_ok=True)
+    logger.info(f"Diretórios criados/verificados: {config.output_dir}, {config.temp_dir}")
 
 
-def read_csv_participants():
+def read_csv_participants(config: CertificateConfig):
     """
     Lê o arquivo CSV e extrai os nomes dos participantes.
 
@@ -80,7 +86,7 @@ def read_csv_participants():
     seen_names = set()
 
     try:
-        with open(CSV_FILE, 'r', encoding='utf-16-le') as f:
+        with open(config.csv_file, 'r', encoding='utf-16-le') as f:
             reader = csv.reader(f, delimiter='\t')
 
             # Pula as primeiras linhas até achar a seção "2. Participantes"
@@ -117,11 +123,9 @@ def read_csv_participants():
                             logger.debug(f"Participante adicionado: {clean_name}")
 
     except FileNotFoundError:
-        logger.error(f"Arquivo CSV não encontrado: {CSV_FILE}")
-        sys.exit(1)
+        raise RuntimeError(f"Arquivo CSV não encontrado: {config.csv_file}")
     except Exception as e:
-        logger.error(f"Erro ao ler CSV: {e}")
-        sys.exit(1)
+        raise RuntimeError(f"Erro ao ler CSV: {e}")
 
     logger.info(f"Total de {len(participants)} participantes extraídos do CSV")
     return participants
@@ -248,7 +252,7 @@ def convert_pptx_to_pdf(pptx_path, pdf_path):
         return False
 
 
-def generate_certificate(participant_name):
+def generate_certificate(participant_name, config: CertificateConfig):
     """
     Gera um certificado personalizado para um participante.
 
@@ -260,6 +264,7 @@ def generate_certificate(participant_name):
 
     Args:
         participant_name (str): Nome do participante
+        config (CertificateConfig): Configuração com caminhos e callback
 
     Returns:
         bool: True se gerado com sucesso
@@ -267,11 +272,11 @@ def generate_certificate(participant_name):
     try:
         # Cria nomes de arquivo
         safe_name = sanitize_filename(participant_name)
-        temp_pptx = TEMP_DIR / f"{safe_name}_temp.pptx"
-        output_pdf = OUTPUT_DIR / f"Certificado_{safe_name}.pdf"
+        temp_pptx = config.temp_dir / f"{safe_name}_temp.pptx"
+        output_pdf = config.output_dir / f"Certificado_{safe_name}.pdf"
 
         # Copia o template para a pasta temporária
-        shutil.copy2(TEMPLATE_PPTX, temp_pptx)
+        shutil.copy2(config.template_pptx, temp_pptx)
         logger.debug(f"Template copiado para: {temp_pptx}")
 
         # Substitui o nome no PPTX
@@ -284,7 +289,7 @@ def generate_certificate(participant_name):
 
         # Se a conversão para PDF falhou, mantém apenas o PPTX
         if not success:
-            output_pptx = OUTPUT_DIR / f"Certificado_{safe_name}.pptx"
+            output_pptx = config.output_dir / f"Certificado_{safe_name}.pptx"
             shutil.move(temp_pptx, output_pptx)
             logger.warning(f"Certificado salvo como PPTX (falha na conversão PDF): {output_pptx}")
             return True
@@ -299,12 +304,13 @@ def generate_certificate(participant_name):
         return False
 
 
-def generate_all_certificates(participants):
+def generate_all_certificates(participants, config: CertificateConfig):
     """
     Gera certificados para todos os participantes.
 
     Args:
         participants (list): Lista de nomes dos participantes
+        config (CertificateConfig): Configuração com caminhos e callback
 
     Returns:
         dict: Relatório com estatísticas de sucesso/falha
@@ -318,10 +324,13 @@ def generate_all_certificates(participants):
     for idx, participant in enumerate(participants, 1):
         logger.info(f"[{idx}/{total}] Gerando certificado para: {participant}")
 
-        if generate_certificate(participant):
+        if generate_certificate(participant, config):
             success += 1
         else:
             failed.append(participant)
+
+        if config.progress_callback:
+            config.progress_callback(idx, total, participant)
 
         # Mostra progresso a cada 5 certificados
         if idx % 5 == 0 or idx == total:
@@ -355,7 +364,7 @@ def print_report(report):
         for name in report['failed_names']:
             print(f"  - {name}")
 
-    print(f"\nCertificados salvos em: {OUTPUT_DIR}")
+    print(f"\nCertificados salvos em: {report.get('output_dir', '')}")
     print("=" * 60 + "\n")
 
     # Registra no log
@@ -367,32 +376,39 @@ def print_report(report):
 
 
 def main():
-    """Função principal."""
+    """Função principal (modo CLI)."""
+    config = CertificateConfig(
+        csv_file=BASE_DIR / "relatorio.csv",
+        template_pptx=BASE_DIR / "modelo_certificado.pptx",
+        output_dir=BASE_DIR / "certificados_gerados",
+        temp_dir=BASE_DIR / ".temp_pptx",
+    )
+
     logger.info("Iniciando automação de geração de certificados")
-    logger.info(f"Arquivo CSV: {CSV_FILE}")
-    logger.info(f"Template PPTX: {TEMPLATE_PPTX}")
+    logger.info(f"Arquivo CSV: {config.csv_file}")
+    logger.info(f"Template PPTX: {config.template_pptx}")
 
     # Validações iniciais
-    if not TEMPLATE_PPTX.exists():
-        logger.error(f"Template PPTX não encontrado: {TEMPLATE_PPTX}")
+    if not config.template_pptx.exists():
+        logger.error(f"Template PPTX não encontrado: {config.template_pptx}")
         sys.exit(1)
 
-    if not CSV_FILE.exists():
-        logger.error(f"Arquivo CSV não encontrado: {CSV_FILE}")
+    if not config.csv_file.exists():
+        logger.error(f"Arquivo CSV não encontrado: {config.csv_file}")
         sys.exit(1)
 
     # Cria estrutura de diretórios
-    create_directories()
+    create_directories(config)
 
     # Lê participantes do CSV
-    participants = read_csv_participants()
+    participants = read_csv_participants(config)
 
     if not participants:
         logger.error("Nenhum participante encontrado no CSV")
         sys.exit(1)
 
     # Gera certificados
-    report = generate_all_certificates(participants)
+    report = generate_all_certificates(participants, config)
 
     # Imprime e registra o relatório
     print_report(report)
