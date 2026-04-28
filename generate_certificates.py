@@ -15,6 +15,11 @@ import csv
 import os
 import shutil
 import sys
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 from pathlib import Path
 import re
 import logging
@@ -53,6 +58,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+SMTP_HOST = "172.31.31.112"
+SMTP_PORT = 25
+FROM_EMAIL = "automacao@mindworks.com.br"
+ALLOWED_DOMAIN = "@mindworks.com.br"
+
 
 @dataclass
 class CertificateConfig:
@@ -60,6 +70,8 @@ class CertificateConfig:
     template_pptx: Path
     output_dir: Path
     temp_dir: Path
+    event_name: str = ""
+    instructor_name: str = ""
     progress_callback: Optional[Callable[[int, int, str], None]] = None
 
 
@@ -72,15 +84,10 @@ def create_directories(config: CertificateConfig):
 
 def read_csv_participants(config: CertificateConfig):
     """
-    Lê o arquivo CSV e extrai os nomes dos participantes.
-
-    O CSV exportado do Teams tem a seguinte estrutura:
-    - Linhas 0-8: Cabeçalho e seção de resumo
-    - Linhas 9-42: Seção de Participantes (nome na coluna 0, função na coluna 6)
-    - Depois: Seções de Atividades e Consentimento
+    Lê o arquivo CSV e extrai nome e email dos participantes.
 
     Returns:
-        list: Lista de nomes únicos de participantes (strings)
+        list[dict]: Lista de dicts com chaves 'name' e 'email'
     """
     participants = []
     seen_names = set()
@@ -89,38 +96,32 @@ def read_csv_participants(config: CertificateConfig):
         with open(config.csv_file, 'r', encoding='utf-16-le') as f:
             reader = csv.reader(f, delimiter='\t')
 
-            # Pula as primeiras linhas até achar a seção "2. Participantes"
             in_participants_section = False
             for row_idx, row in enumerate(reader):
                 if not row:
                     continue
 
-                # Detecta início da seção de participantes
                 if len(row) > 0 and "Participantes" in row[0] and "." in row[0]:
                     in_participants_section = True
                     logger.debug(f"Seção de Participantes encontrada na linha {row_idx}")
                     continue
 
-                # Detecta fim da seção (começa nova seção com número)
                 if in_participants_section and len(row) > 0 and re.match(r'^\d+\.\s+', row[0]):
                     logger.debug(f"Fim da seção de participantes na linha {row_idx}")
                     break
 
-                # Se está na seção e a linha tem dados de participante
                 if in_participants_section and len(row) >= 7:
                     name = row[0].strip() if row[0] else ""
+                    email = row[4].strip() if len(row) > 4 and row[4] else ""
                     function = row[6].strip() if len(row) > 6 and row[6] else ""
 
-                    # Filtra nomes válidos (não vazios, sem serviços de bot)
                     if name and function in ["Participante", "Organizador"]:
-                        # Remove sufixo "(Não verificado)"
                         clean_name = re.sub(r'\s*\(Não verificado\)\s*', '', name).strip()
 
-                        # Evita duplicatas
                         if clean_name and clean_name not in seen_names:
-                            participants.append(clean_name)
+                            participants.append({"name": clean_name, "email": email})
                             seen_names.add(clean_name)
-                            logger.debug(f"Participante adicionado: {clean_name}")
+                            logger.debug(f"Participante adicionado: {clean_name} <{email}>")
 
     except FileNotFoundError:
         raise RuntimeError(f"Arquivo CSV não encontrado: {config.csv_file}")
@@ -143,65 +144,32 @@ def sanitize_filename(name):
     return sanitized
 
 
-def find_and_replace_name_in_pptx(pptx_path, participant_name):
+def find_and_replace_in_pptx(pptx_path, replacements: dict):
     """
-    Abre um arquivo PPTX e substitui o nome do participante.
-
-    Procura por text boxes que contenham "Certificamos que" e substitui
-    o nome imediatamente após esse texto.
+    Substitui todos os placeholders no PPTX conforme o dicionário fornecido.
 
     Args:
         pptx_path (Path): Caminho do arquivo PPTX
-        participant_name (str): Nome do participante para inserir
+        replacements (dict): Mapa de placeholder → valor
 
     Returns:
-        bool: True se a substituição foi bem-sucedida
+        bool: True se bem-sucedido
     """
     try:
         prs = Presentation(str(pptx_path))
-
-        # Itera sobre todos os slides (deve haver apenas 1)
         for slide in prs.slides:
             for shape in slide.shapes:
-                # Verifica se é uma shape com texto
-                if not hasattr(shape, "text"):
+                if not hasattr(shape, "text_frame"):
                     continue
-
-                text = shape.text
-
-                # Se encontrar o padrão "Certificamos que", substitui o nome depois
-                if "Certificamos que" in text:
-                    # Tenta encontrar e substituir no text_frame
-                    if hasattr(shape, "text_frame"):
-                        for paragraph in shape.text_frame.paragraphs:
-                            for run in paragraph.runs:
-                                # Procura pelo placeholder ou padrão específico
-                                if "[" in run.text or "NOME" in run.text or "nome" in run.text.lower():
-                                    # Substitui placeholders comuns
-                                    run.text = run.text.replace("[NOME DO PARTICIPANTE]", participant_name)
-                                    run.text = run.text.replace("[NOME]", participant_name)
-                                    run.text = run.text.replace("NOME DO PARTICIPANTE", participant_name)
-                                    logger.debug(f"Placeholder substituído: {run.text}")
-
-        # Se não encontrou nenhum placeholder com padrão, tenta uma abordagem mais simples
-        # Procura por qualquer texto que possa ser um placeholder
-        found_and_replaced = False
-        for slide in prs.slides:
-            for shape in slide.shapes:
-                if hasattr(shape, "text_frame"):
-                    for paragraph in shape.text_frame.paragraphs:
-                        for run in paragraph.runs:
-                            # Se o texto parece ser um placeholder (vazio, genérico, ou marcador)
-                            if run.text.lower() in ["nome", "[nome]", "participante", "[participante]"]:
-                                run.text = participant_name
-                                found_and_replaced = True
-                                logger.debug(f"Nome substituído em run simples: {participant_name}")
-
-        # Salva o arquivo modificado
+                for paragraph in shape.text_frame.paragraphs:
+                    for run in paragraph.runs:
+                        for placeholder, value in replacements.items():
+                            if placeholder in run.text:
+                                run.text = run.text.replace(placeholder, value)
+                                logger.debug(f"Substituído '{placeholder}' → '{value}'")
         prs.save(str(pptx_path))
         logger.info(f"PPTX modificado com sucesso: {pptx_path}")
         return True
-
     except Exception as e:
         logger.error(f"Erro ao modificar PPTX: {e}")
         return False
@@ -279,9 +247,16 @@ def generate_certificate(participant_name, config: CertificateConfig):
         shutil.copy2(config.template_pptx, temp_pptx)
         logger.debug(f"Template copiado para: {temp_pptx}")
 
-        # Substitui o nome no PPTX
-        if not find_and_replace_name_in_pptx(temp_pptx, participant_name):
-            logger.error(f"Falha ao substituir nome no PPTX para: {participant_name}")
+        # Substitui placeholders no PPTX
+        replacements = {
+            "[NOME DO PARTICIPANTE]": participant_name,
+            "[NOME]": participant_name,
+            "NOME DO PARTICIPANTE": participant_name,
+            "[EVENTO]": config.event_name,
+            "[MINISTRANTE]": config.instructor_name,
+        }
+        if not find_and_replace_in_pptx(temp_pptx, replacements):
+            logger.error(f"Falha ao substituir placeholders no PPTX para: {participant_name}")
             return False
 
         # Tenta converter para PDF
@@ -322,15 +297,16 @@ def generate_all_certificates(participants, config: CertificateConfig):
     logger.info(f"Iniciando geração de {total} certificados...")
 
     for idx, participant in enumerate(participants, 1):
-        logger.info(f"[{idx}/{total}] Gerando certificado para: {participant}")
+        name = participant["name"] if isinstance(participant, dict) else participant
+        logger.info(f"[{idx}/{total}] Gerando certificado para: {name}")
 
-        if generate_certificate(participant, config):
+        if generate_certificate(name, config):
             success += 1
         else:
-            failed.append(participant)
+            failed.append(name)
 
         if config.progress_callback:
-            config.progress_callback(idx, total, participant)
+            config.progress_callback(idx, total, name)
 
         # Mostra progresso a cada 5 certificados
         if idx % 5 == 0 or idx == total:
@@ -346,6 +322,101 @@ def generate_all_certificates(participants, config: CertificateConfig):
     }
 
     return report
+
+
+def send_certificate_email(participant: dict, config: CertificateConfig) -> bool:
+    """
+    Envia o certificado PDF por email para um participante.
+
+    Returns:
+        bool: True se enviado com sucesso, False se ignorado ou com erro
+    """
+    name = participant["name"]
+    email = participant.get("email", "")
+
+    if not email.endswith(ALLOWED_DOMAIN):
+        logger.warning(f"Email ignorado (domínio não autorizado): {name} <{email}>")
+        return False
+
+    pdf_path = config.output_dir / f"Certificado_{sanitize_filename(name)}.pdf"
+    if not pdf_path.exists():
+        logger.error(f"PDF não encontrado para envio: {pdf_path}")
+        return False
+
+    try:
+        msg = MIMEMultipart()
+        msg["From"] = FROM_EMAIL
+        msg["To"] = email
+        msg["Subject"] = f"Certificado - {config.event_name}"
+
+        body = (
+            f"Olá {name},\n\n"
+            f"Segue em anexo seu certificado de participação no evento {config.event_name}.\n\n"
+            f"Atenciosamente,\n"
+            f"Mindworks"
+        )
+        msg.attach(MIMEText(body, "plain", "utf-8"))
+
+        with open(pdf_path, "rb") as f:
+            part = MIMEBase("application", "octet-stream")
+            part.set_payload(f.read())
+            encoders.encode_base64(part)
+            part.add_header(
+                "Content-Disposition",
+                f'attachment; filename="Certificado_{sanitize_filename(name)}.pdf"'
+            )
+            msg.attach(part)
+
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=15) as server:
+            server.sendmail(FROM_EMAIL, email, msg.as_string())
+
+        logger.info(f"Email enviado: {name} <{email}>")
+        return True
+
+    except Exception as e:
+        logger.error(f"Erro ao enviar email para {name} <{email}>: {e}")
+        return False
+
+
+def send_all_emails(participants: list, config: CertificateConfig,
+                    progress_callback: Optional[Callable[[int, int, str], None]] = None) -> dict:
+    """
+    Envia emails com certificados para todos os participantes.
+
+    Returns:
+        dict: Relatório com total, enviados, falhas e ignorados
+    """
+    total = len(participants)
+    sent = 0
+    failed = []
+    skipped = []
+
+    logger.info(f"Iniciando envio de {total} emails...")
+
+    for idx, participant in enumerate(participants, 1):
+        name = participant["name"]
+        email = participant.get("email", "")
+
+        if not email.endswith(ALLOWED_DOMAIN):
+            logger.warning(f"[{idx}/{total}] Ignorado (domínio inválido): {name} <{email}>")
+            skipped.append(name)
+        elif send_certificate_email(participant, config):
+            sent += 1
+        else:
+            failed.append(name)
+
+        if progress_callback:
+            progress_callback(idx, total, name)
+
+    logger.info(f"Envio concluído: {sent} enviados, {len(failed)} falhas, {len(skipped)} ignorados")
+    return {
+        "total": total,
+        "sent": sent,
+        "failed": len(failed),
+        "failed_names": failed,
+        "skipped": len(skipped),
+        "skipped_names": skipped,
+    }
 
 
 def print_report(report):
