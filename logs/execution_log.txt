@@ -1,0 +1,23 @@
+2026-04-27 17:13:40,884 - INFO - Iniciando automação de geração de certificados
+2026-04-27 17:13:40,885 - INFO - Arquivo CSV: C:\Users\guilherme.brotto\Documents\automacao-certificados\relatorio.csv
+2026-04-27 17:13:40,885 - INFO - Template PPTX: C:\Users\guilherme.brotto\Documents\automacao-certificados\modelo-certificado.pptx
+2026-04-27 17:13:40,886 - ERROR - Template PPTX não encontrado: C:\Users\guilherme.brotto\Documents\automacao-certificados\modelo-certificado.pptx
+2026-04-27 17:14:54,272 - INFO - Iniciando automação de geração de certificados
+2026-04-27 17:14:54,274 - INFO - Arquivo CSV: C:\Users\guilherme.brotto\Documents\automacao-certificados\relatorio.csv
+2026-04-27 17:14:54,275 - INFO - Template PPTX: C:\Users\guilherme.brotto\Documents\automacao-certificados\modelo_certificado.pptx
+2026-04-27 17:14:54,280 - INFO - Diretórios criados/verificados: C:\Users\guilherme.brotto\Documents\automacao-certificados\certificados_gerados, C:\Users\guilherme.brotto\Documents\automacao-certificados\.temp_pptx
+2026-04-27 17:14:54,302 - INFO - Total de 2 participantes extraídos do CSV
+2026-04-27 17:14:54,303 - INFO - Iniciando geração de 2 certificados...
+2026-04-27 17:14:54,304 - INFO - [1/2] Gerando certificado para: Jairo Rodrigues Trancoso Junior
+2026-04-27 17:14:54,597 - INFO - PPTX modificado com sucesso: C:\Users\guilherme.brotto\Documents\automacao-certificados\.temp_pptx\Jairo_Rodrigues_Trancoso_Junior_temp.pptx
+2026-04-27 17:15:01,427 - INFO - PDF criado com sucesso: C:\Users\guilherme.brotto\Documents\automacao-certificados\certificados_gerados\Certificado_Jairo_Rodrigues_Trancoso_Junior.pdf
+2026-04-27 17:15:04,307 - INFO - [2/2] Gerando certificado para: Luciane Zardini Passamai
+2026-04-27 17:15:04,457 - INFO - PPTX modificado com sucesso: C:\Users\guilherme.brotto\Documents\automacao-certificados\.temp_pptx\Luciane_Zardini_Passamai_temp.pptx
+2026-04-27 17:15:10,289 - INFO - PDF criado com sucesso: C:\Users\guilherme.brotto\Documents\automacao-certificados\certificados_gerados\Certificado_Luciane_Zardini_Passamai.pdf
+2026-04-27 17:15:12,882 - INFO - Progresso: 2/2 certificados gerados com sucesso
+2026-04-27 17:15:12,884 - INFO - ============================================================
+2026-04-27 17:15:12,884 - INFO - RELATÓRIO FINAL DE GERAÇÃO
+2026-04-27 17:15:12,884 - INFO - Total: 2, Sucesso: 2, Falhas: 0
+2026-04-27 17:15:12,885 - INFO - Taxa de sucesso: 100.0%
+2026-04-27 17:15:12,885 - INFO - ============================================================
+2026-04-27 17:15:12,885 - INFO - Processamento concluído com sucesso!
