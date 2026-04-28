@@ -43,3 +43,13 @@
 2026-04-28 10:26:54,225 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx\Luciane_Zardini_Passamai_temp.pptx
 2026-04-28 10:26:56,408 - INFO - PDF criado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados\Certificado_Luciane_Zardini_Passamai.pdf
 2026-04-28 10:26:58,937 - INFO - Progresso: 2/2 certificados gerados com sucesso
+2026-04-28 10:30:02,238 - INFO - Diretórios criados/verificados: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados, C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx
+2026-04-28 10:30:02,242 - INFO - Total de 2 participantes extraídos do CSV
+2026-04-28 10:30:02,242 - INFO - Iniciando geração de 2 certificados...
+2026-04-28 10:30:02,242 - INFO - [1/2] Gerando certificado para: Jairo Rodrigues Trancoso Junior
+2026-04-28 10:30:02,310 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx\Jairo_Rodrigues_Trancoso_Junior_temp.pptx
+2026-04-28 10:30:03,351 - INFO - PDF criado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados\Certificado_Jairo_Rodrigues_Trancoso_Junior.pdf
+2026-04-28 10:30:05,966 - INFO - [2/2] Gerando certificado para: Luciane Zardini Passamai
+2026-04-28 10:30:06,000 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx\Luciane_Zardini_Passamai_temp.pptx
+2026-04-28 10:30:07,771 - INFO - PDF criado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados\Certificado_Luciane_Zardini_Passamai.pdf
+2026-04-28 10:30:10,487 - INFO - Progresso: 2/2 certificados gerados com sucesso
