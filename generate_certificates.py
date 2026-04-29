@@ -84,7 +84,7 @@ def create_directories(config: CertificateConfig):
 
 def read_csv_participants(config: CertificateConfig):
     """
-    Lê o arquivo CSV e extrai nome e email dos participantes.
+    Lê o arquivo CSV (Nome;Email;Função) e extrai participantes.
 
     Returns:
         list[dict]: Lista de dicts com chaves 'name' e 'email'
@@ -92,41 +92,31 @@ def read_csv_participants(config: CertificateConfig):
     participants = []
     seen_names = set()
 
-    try:
-        with open(config.csv_file, 'r', encoding='utf-16-le') as f:
-            reader = csv.reader(f, delimiter='\t')
+    rows = None
+    for encoding in ('utf-8-sig', 'cp1252', 'utf-8'):
+        try:
+            with open(config.csv_file, 'r', encoding=encoding) as f:
+                rows = list(csv.reader(f, delimiter=';'))
+            break
+        except (UnicodeDecodeError, UnicodeError):
+            continue
 
-            in_participants_section = False
-            for row_idx, row in enumerate(reader):
-                if not row:
-                    continue
+    if rows is None:
+        raise RuntimeError(f"Não foi possível ler o arquivo CSV: {config.csv_file}")
 
-                if len(row) > 0 and "Participantes" in row[0] and "." in row[0]:
-                    in_participants_section = True
-                    logger.debug(f"Seção de Participantes encontrada na linha {row_idx}")
-                    continue
+    for row_idx, row in enumerate(rows):
+        if row_idx == 0:
+            continue  # pula cabeçalho
+        if not row or not row[0].strip():
+            continue
 
-                if in_participants_section and len(row) > 0 and re.match(r'^\d+\.\s+', row[0]):
-                    logger.debug(f"Fim da seção de participantes na linha {row_idx}")
-                    break
+        name = row[0].strip()
+        email = row[1].strip() if len(row) > 1 else ""
 
-                if in_participants_section and len(row) >= 7:
-                    name = row[0].strip() if row[0] else ""
-                    email = row[4].strip() if len(row) > 4 and row[4] else ""
-                    function = row[6].strip() if len(row) > 6 and row[6] else ""
-
-                    if name and function in ["Participante", "Organizador"]:
-                        clean_name = re.sub(r'\s*\(Não verificado\)\s*', '', name).strip()
-
-                        if clean_name and clean_name not in seen_names:
-                            participants.append({"name": clean_name, "email": email})
-                            seen_names.add(clean_name)
-                            logger.debug(f"Participante adicionado: {clean_name} <{email}>")
-
-    except FileNotFoundError:
-        raise RuntimeError(f"Arquivo CSV não encontrado: {config.csv_file}")
-    except Exception as e:
-        raise RuntimeError(f"Erro ao ler CSV: {e}")
+        if name and name not in seen_names:
+            participants.append({"name": name, "email": email})
+            seen_names.add(name)
+            logger.debug(f"Participante adicionado: {name} <{email}>")
 
     logger.info(f"Total de {len(participants)} participantes extraídos do CSV")
     return participants
@@ -449,7 +439,7 @@ def print_report(report):
 def main():
     """Função principal (modo CLI)."""
     config = CertificateConfig(
-        csv_file=BASE_DIR / "relatorio.csv",
+        csv_file=BASE_DIR / "participantes.CSV",
         template_pptx=BASE_DIR / "modelo_certificado.pptx",
         output_dir=BASE_DIR / "certificados_gerados",
         temp_dir=BASE_DIR / ".temp_pptx",

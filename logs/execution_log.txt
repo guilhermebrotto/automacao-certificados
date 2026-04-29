@@ -165,3 +165,16 @@
 2026-04-28 14:41:41,001 - ERROR - Erro ao enviar email para Jairo Rodrigues Trancoso Junior <jairo.trancoso@mindworks.com.br>: {'jairo.trancoso@mindworks.com.br': (454, b'4.7.1 <jairo.trancoso@mindworks.com.br>: Relay access denied')}
 2026-04-28 14:41:41,211 - ERROR - Erro ao enviar email para Luciane Zardini Passamai <luciane.passamai@mindworks.com.br>: {'luciane.passamai@mindworks.com.br': (454, b'4.7.1 <luciane.passamai@mindworks.com.br>: Relay access denied')}
 2026-04-28 14:41:41,213 - INFO - Envio concluído: 0 enviados, 2 falhas, 0 ignorados
+2026-04-29 11:47:12,671 - INFO - Diretórios criados/verificados: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados, C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx
+2026-04-29 11:47:12,672 - INFO - Total de 3 participantes extraídos do CSV
+2026-04-29 11:47:12,673 - INFO - Iniciando geração de 3 certificados...
+2026-04-29 11:47:12,673 - INFO - [1/3] Gerando certificado para: Jairo Rodrigues Trancoso Junior
+2026-04-29 11:47:12,730 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx\Jairo_Rodrigues_Trancoso_Junior_temp.pptx
+2026-04-29 11:47:16,200 - INFO - PDF criado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados\Certificado_Jairo_Rodrigues_Trancoso_Junior.pdf
+2026-04-29 11:47:18,855 - INFO - [2/3] Gerando certificado para: Luciane Zardini Passamai
+2026-04-29 11:47:18,892 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx\Luciane_Zardini_Passamai_temp.pptx
+2026-04-29 11:47:21,044 - INFO - PDF criado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados\Certificado_Luciane_Zardini_Passamai.pdf
+2026-04-29 11:47:23,683 - INFO - [3/3] Gerando certificado para: Guilherme Silveira Gomes Brotto
+2026-04-29 11:47:23,743 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx\Guilherme_Silveira_Gomes_Brotto_temp.pptx
+2026-04-29 11:47:25,499 - INFO - PDF criado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados\Certificado_Guilherme_Silveira_Gomes_Brotto.pdf
+2026-04-29 11:47:28,059 - INFO - Progresso: 3/3 certificados gerados com sucesso

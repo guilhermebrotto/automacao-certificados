@@ -356,7 +356,7 @@ class App(tk.Tk):
             if not participants:
                 raise RuntimeError(
                     "Nenhum participante encontrado no CSV.\n\n"
-                    "Verifique se o arquivo é o relatório de presença correto do Teams."
+                    "Verifique se o arquivo tem o formato correto: Nome;Email;Função"
                 )
 
             report = generate_all_certificates(participants, config)
