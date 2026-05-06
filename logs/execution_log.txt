@@ -178,3 +178,113 @@
 2026-04-29 11:47:23,743 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\.temp_pptx\Guilherme_Silveira_Gomes_Brotto_temp.pptx
 2026-04-29 11:47:25,499 - INFO - PDF criado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\certificados_gerados\Certificado_Guilherme_Silveira_Gomes_Brotto.pdf
 2026-04-29 11:47:28,059 - INFO - Progresso: 3/3 certificados gerados com sucesso
+2026-05-06 11:37:27,566 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.100.22:5000
+2026-05-06 11:37:27,568 - INFO - [33mPress CTRL+C to quit[0m
+2026-05-06 11:37:31,609 - INFO - 127.0.0.1 - - [06/May/2026 11:37:31] "GET / HTTP/1.1" 200 -
+2026-05-06 11:37:42,189 - INFO - 127.0.0.1 - - [06/May/2026 11:37:42] "GET / HTTP/1.1" 200 -
+2026-05-06 11:38:00,683 - INFO - 127.0.0.1 - - [06/May/2026 11:38:00] "GET /static/style.css HTTP/1.1" 200 -
+2026-05-06 11:38:00,709 - INFO - 127.0.0.1 - - [06/May/2026 11:38:00] "GET /static/app.js HTTP/1.1" 200 -
+2026-05-06 11:39:47,886 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.100.22:5000
+2026-05-06 11:39:47,886 - INFO - [33mPress CTRL+C to quit[0m
+2026-05-06 11:39:49,919 - INFO - 127.0.0.1 - - [06/May/2026 11:39:49] "GET / HTTP/1.1" 200 -
+2026-05-06 11:39:50,000 - INFO - 127.0.0.1 - - [06/May/2026 11:39:50] "GET /static/style.css HTTP/1.1" 200 -
+2026-05-06 11:39:50,177 - INFO - 127.0.0.1 - - [06/May/2026 11:39:50] "GET /static/app.js HTTP/1.1" 200 -
+2026-05-06 11:39:50,503 - INFO - 127.0.0.1 - - [06/May/2026 11:39:50] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-06 11:40:21,702 - INFO - 127.0.0.1 - - [06/May/2026 11:40:21] "POST /gerar HTTP/1.1" 200 -
+2026-05-06 11:40:21,704 - INFO - Diretórios criados/verificados: C:\Users\Usuário\Documents\automacao-certificados\outputs\0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3, C:\Users\Usuário\Documents\automacao-certificados\uploads\0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3\.temp_pptx
+2026-05-06 11:40:21,709 - INFO - Total de 3 participantes extraídos do CSV
+2026-05-06 11:40:21,709 - INFO - Iniciando geração de 3 certificados...
+2026-05-06 11:40:21,710 - INFO - [1/3] Gerando certificado para: Jairo Rodrigues Trancoso Junior
+2026-05-06 11:40:21,779 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\uploads\0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3\.temp_pptx\Jairo_Rodrigues_Trancoso_Junior_temp.pptx
+2026-05-06 11:40:21,782 - ERROR - Erro ao converter PPTX para PDF: [WinError -2147221008] CoInitialize não foi chamado
+2026-05-06 11:40:21,782 - WARNING - Arquivo PPTX mantido como fallback: C:\Users\Usuário\Documents\automacao-certificados\uploads\0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3\.temp_pptx\Jairo_Rodrigues_Trancoso_Junior_temp.pptx
+2026-05-06 11:40:21,782 - WARNING - Certificado salvo como PPTX (falha na conversão PDF): C:\Users\Usuário\Documents\automacao-certificados\outputs\0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3\Certificado_Jairo_Rodrigues_Trancoso_Junior.pptx
+2026-05-06 11:40:21,783 - INFO - [2/3] Gerando certificado para: Luciane Zardini Passamai
+2026-05-06 11:40:21,817 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\uploads\0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3\.temp_pptx\Luciane_Zardini_Passamai_temp.pptx
+2026-05-06 11:40:21,817 - ERROR - Erro ao converter PPTX para PDF: [WinError -2147221008] CoInitialize não foi chamado
+2026-05-06 11:40:21,817 - WARNING - Arquivo PPTX mantido como fallback: C:\Users\Usuário\Documents\automacao-certificados\uploads\0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3\.temp_pptx\Luciane_Zardini_Passamai_temp.pptx
+2026-05-06 11:40:21,818 - WARNING - Certificado salvo como PPTX (falha na conversão PDF): C:\Users\Usuário\Documents\automacao-certificados\outputs\0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3\Certificado_Luciane_Zardini_Passamai.pptx
+2026-05-06 11:40:21,819 - INFO - [3/3] Gerando certificado para: Guilherme Silveira Gomes Brotto
+2026-05-06 11:40:21,853 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\uploads\0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3\.temp_pptx\Guilherme_Silveira_Gomes_Brotto_temp.pptx
+2026-05-06 11:40:21,853 - ERROR - Erro ao converter PPTX para PDF: [WinError -2147221008] CoInitialize não foi chamado
+2026-05-06 11:40:21,854 - WARNING - Arquivo PPTX mantido como fallback: C:\Users\Usuário\Documents\automacao-certificados\uploads\0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3\.temp_pptx\Guilherme_Silveira_Gomes_Brotto_temp.pptx
+2026-05-06 11:40:21,858 - WARNING - Certificado salvo como PPTX (falha na conversão PDF): C:\Users\Usuário\Documents\automacao-certificados\outputs\0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3\Certificado_Guilherme_Silveira_Gomes_Brotto.pptx
+2026-05-06 11:40:21,859 - INFO - Progresso: 3/3 certificados gerados com sucesso
+2026-05-06 11:40:22,724 - INFO - 127.0.0.1 - - [06/May/2026 11:40:22] "GET /status/0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3 HTTP/1.1" 200 -
+2026-05-06 11:40:26,525 - INFO - 127.0.0.1 - - [06/May/2026 11:40:26] "GET /download/0b5d84e7-2d96-4e5c-90a1-4af8a2edaab3 HTTP/1.1" 200 -
+2026-05-06 11:48:04,795 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.100.22:5000
+2026-05-06 11:48:04,796 - INFO - [33mPress CTRL+C to quit[0m
+2026-05-06 11:48:05,815 - INFO - 127.0.0.1 - - [06/May/2026 11:48:05] "GET / HTTP/1.1" 200 -
+2026-05-06 11:48:05,835 - INFO - 127.0.0.1 - - [06/May/2026 11:48:05] "[36mGET /static/app.js HTTP/1.1[0m" 304 -
+2026-05-06 11:48:06,079 - INFO - 127.0.0.1 - - [06/May/2026 11:48:06] "GET /static/style.css HTTP/1.1" 200 -
+2026-05-06 11:48:45,753 - INFO - 127.0.0.1 - - [06/May/2026 11:48:45] "POST /gerar HTTP/1.1" 200 -
+2026-05-06 11:48:45,755 - INFO - Diretórios criados/verificados: C:\Users\Usuário\Documents\automacao-certificados\outputs\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde, C:\Users\Usuário\Documents\automacao-certificados\uploads\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\.temp_pptx
+2026-05-06 11:48:45,762 - INFO - Total de 3 participantes extraídos do CSV
+2026-05-06 11:48:45,763 - INFO - Iniciando geração de 3 certificados...
+2026-05-06 11:48:45,764 - INFO - [1/3] Gerando certificado para: Jairo Rodrigues Trancoso Junior
+2026-05-06 11:48:45,815 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\uploads\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\.temp_pptx\Jairo_Rodrigues_Trancoso_Junior_temp.pptx
+2026-05-06 11:48:45,817 - ERROR - Erro ao converter PPTX para PDF: [WinError -2147221008] CoInitialize não foi chamado
+2026-05-06 11:48:45,817 - WARNING - Arquivo PPTX mantido como fallback: C:\Users\Usuário\Documents\automacao-certificados\uploads\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\.temp_pptx\Jairo_Rodrigues_Trancoso_Junior_temp.pptx
+2026-05-06 11:48:45,820 - WARNING - Certificado salvo como PPTX (falha na conversão PDF): C:\Users\Usuário\Documents\automacao-certificados\outputs\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\Certificado_Jairo_Rodrigues_Trancoso_Junior.pptx
+2026-05-06 11:48:45,820 - INFO - [2/3] Gerando certificado para: Luciane Zardini Passamai
+2026-05-06 11:48:45,854 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\uploads\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\.temp_pptx\Luciane_Zardini_Passamai_temp.pptx
+2026-05-06 11:48:45,855 - ERROR - Erro ao converter PPTX para PDF: [WinError -2147221008] CoInitialize não foi chamado
+2026-05-06 11:48:45,855 - WARNING - Arquivo PPTX mantido como fallback: C:\Users\Usuário\Documents\automacao-certificados\uploads\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\.temp_pptx\Luciane_Zardini_Passamai_temp.pptx
+2026-05-06 11:48:45,856 - WARNING - Certificado salvo como PPTX (falha na conversão PDF): C:\Users\Usuário\Documents\automacao-certificados\outputs\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\Certificado_Luciane_Zardini_Passamai.pptx
+2026-05-06 11:48:45,858 - INFO - [3/3] Gerando certificado para: Guilherme Silveira Gomes Brotto
+2026-05-06 11:48:45,892 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\uploads\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\.temp_pptx\Guilherme_Silveira_Gomes_Brotto_temp.pptx
+2026-05-06 11:48:45,892 - ERROR - Erro ao converter PPTX para PDF: [WinError -2147221008] CoInitialize não foi chamado
+2026-05-06 11:48:45,895 - WARNING - Arquivo PPTX mantido como fallback: C:\Users\Usuário\Documents\automacao-certificados\uploads\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\.temp_pptx\Guilherme_Silveira_Gomes_Brotto_temp.pptx
+2026-05-06 11:48:45,896 - WARNING - Certificado salvo como PPTX (falha na conversão PDF): C:\Users\Usuário\Documents\automacao-certificados\outputs\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\Certificado_Guilherme_Silveira_Gomes_Brotto.pptx
+2026-05-06 11:48:45,896 - INFO - Progresso: 3/3 certificados gerados com sucesso
+2026-05-06 11:48:46,768 - INFO - 127.0.0.1 - - [06/May/2026 11:48:46] "GET /status/6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde HTTP/1.1" 200 -
+2026-05-06 11:48:54,667 - INFO - Iniciando envio de 3 emails...
+2026-05-06 11:48:54,668 - INFO - 127.0.0.1 - - [06/May/2026 11:48:54] "POST /enviar/6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde HTTP/1.1" 200 -
+2026-05-06 11:48:54,670 - ERROR - PDF não encontrado para envio: C:\Users\Usuário\Documents\automacao-certificados\outputs\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\Certificado_Jairo_Rodrigues_Trancoso_Junior.pdf
+2026-05-06 11:48:54,677 - ERROR - PDF não encontrado para envio: C:\Users\Usuário\Documents\automacao-certificados\outputs\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\Certificado_Luciane_Zardini_Passamai.pdf
+2026-05-06 11:48:54,679 - ERROR - PDF não encontrado para envio: C:\Users\Usuário\Documents\automacao-certificados\outputs\6cec562f-b2aa-42ff-b0cc-da5fcf6d2bde\Certificado_Guilherme_Silveira_Gomes_Brotto.pdf
+2026-05-06 11:48:54,685 - INFO - Envio concluído: 0 enviados, 3 falhas, 0 ignorados
+2026-05-06 11:48:55,682 - INFO - 127.0.0.1 - - [06/May/2026 11:48:55] "GET /email-status/f9121d64-cc45-4f1e-8758-3526a0035a24 HTTP/1.1" 200 -
+2026-05-06 11:50:51,283 - INFO - 127.0.0.1 - - [06/May/2026 11:50:51] "[33mGET /status HTTP/1.1[0m" 404 -
+2026-05-06 11:50:59,233 - INFO - 127.0.0.1 - - [06/May/2026 11:50:59] "[33mGET /status/1 HTTP/1.1[0m" 404 -
+2026-05-06 11:55:34,637 - INFO - 127.0.0.1 - - [06/May/2026 11:55:34] "[33mGET /status/1 HTTP/1.1[0m" 404 -
+2026-05-06 11:55:40,135 - INFO - 127.0.0.1 - - [06/May/2026 11:55:40] "GET / HTTP/1.1" 200 -
+2026-05-06 11:55:40,160 - INFO - 127.0.0.1 - - [06/May/2026 11:55:40] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2026-05-06 11:55:40,471 - INFO - 127.0.0.1 - - [06/May/2026 11:55:40] "[36mGET /static/app.js HTTP/1.1[0m" 304 -
+2026-05-06 11:57:42,354 - INFO - 127.0.0.1 - - [06/May/2026 11:57:42] "GET / HTTP/1.1" 200 -
+2026-05-06 11:57:42,387 - INFO - 127.0.0.1 - - [06/May/2026 11:57:42] "GET /static/style.css HTTP/1.1" 200 -
+2026-05-06 11:57:42,619 - INFO - 127.0.0.1 - - [06/May/2026 11:57:42] "GET /static/app.js HTTP/1.1" 200 -
+2026-05-06 11:57:44,253 - INFO - 127.0.0.1 - - [06/May/2026 11:57:44] "GET / HTTP/1.1" 200 -
+2026-05-06 11:57:44,289 - INFO - 127.0.0.1 - - [06/May/2026 11:57:44] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2026-05-06 11:57:44,521 - INFO - 127.0.0.1 - - [06/May/2026 11:57:44] "[36mGET /static/app.js HTTP/1.1[0m" 304 -
+2026-05-06 11:57:51,236 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.100.22:5000
+2026-05-06 11:57:51,237 - INFO - [33mPress CTRL+C to quit[0m
+2026-05-06 11:57:52,822 - INFO - 127.0.0.1 - - [06/May/2026 11:57:52] "GET / HTTP/1.1" 200 -
+2026-05-06 11:57:52,850 - INFO - 127.0.0.1 - - [06/May/2026 11:57:52] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2026-05-06 11:57:53,071 - INFO - 127.0.0.1 - - [06/May/2026 11:57:53] "[36mGET /static/app.js HTTP/1.1[0m" 304 -
+2026-05-06 11:58:17,971 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.100.22:5000
+2026-05-06 11:58:17,971 - INFO - [33mPress CTRL+C to quit[0m
+2026-05-06 11:58:19,820 - INFO - 127.0.0.1 - - [06/May/2026 11:58:19] "GET / HTTP/1.1" 200 -
+2026-05-06 11:58:19,906 - INFO - 127.0.0.1 - - [06/May/2026 11:58:19] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2026-05-06 11:58:20,081 - INFO - 127.0.0.1 - - [06/May/2026 11:58:20] "[36mGET /static/app.js HTTP/1.1[0m" 304 -
+2026-05-06 12:05:51,338 - INFO - 127.0.0.1 - - [06/May/2026 12:05:51] "GET / HTTP/1.1" 200 -
+2026-05-06 12:05:51,386 - INFO - 127.0.0.1 - - [06/May/2026 12:05:51] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2026-05-06 12:05:51,592 - INFO - 127.0.0.1 - - [06/May/2026 12:05:51] "[36mGET /static/app.js HTTP/1.1[0m" 304 -
+2026-05-06 12:05:53,520 - INFO - 127.0.0.1 - - [06/May/2026 12:05:53] "GET / HTTP/1.1" 200 -
+2026-05-06 12:05:53,543 - INFO - 127.0.0.1 - - [06/May/2026 12:05:53] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2026-05-06 12:05:53,775 - INFO - 127.0.0.1 - - [06/May/2026 12:05:53] "[36mGET /static/app.js HTTP/1.1[0m" 304 -

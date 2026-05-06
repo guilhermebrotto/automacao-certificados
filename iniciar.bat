@@ -2,8 +2,11 @@
 chcp 65001 >nul
 cd /d "%~dp0"
 
-if exist "myenv\Scripts\pythonw.exe" (
-    start "" "myenv\Scripts\pythonw.exe" app.py
+if exist "myenv\Scripts\python.exe" (
+    start "Gerador de Certificados - Servidor" "myenv\Scripts\python.exe" app_web.py
 ) else (
-    start "" pythonw app.py
+    start "Gerador de Certificados - Servidor" python app_web.py
 )
+
+timeout /t 2 /nobreak >nul
+start "" http://localhost:5000

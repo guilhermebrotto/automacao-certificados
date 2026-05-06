@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mindworks — Gerador de Certificados</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <span class="logo">Mindworks</span>
+      <span class="header-subtitle">Gerador de Certificados</span>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- ── Form section ── -->
+    <div id="form-section">
+
+      <div class="card">
+        <h2 class="card-title">Arquivos</h2>
+        <div class="field-group field-group-row">
+
+          <div class="field">
+            <label class="label">Lista de Participantes <span class="req">*</span></label>
+            <div class="file-drop" id="csv-drop" onclick="document.getElementById('csv-input').click()">
+              <div class="file-drop-icon">📄</div>
+              <div class="file-drop-name" id="csv-name">Clique para selecionar</div>
+              <div class="file-drop-hint">Formato: Nome;Email;Função</div>
+            </div>
+            <input type="file" id="csv-input" accept=".csv,.txt" hidden>
+            <span class="field-error" id="csv-error"></span>
+          </div>
+
+          <div class="field">
+            <label class="label">Modelo do Certificado Power Point <span class="req">*</span></label>
+            <div class="file-drop" id="pptx-drop" onclick="document.getElementById('pptx-input').click()">
+              <div class="file-drop-icon">📊</div>
+              <div class="file-drop-name" id="pptx-name">Clique para selecionar</div>
+              <div class="file-drop-hint">Template do certificado em PowerPoint</div>
+            </div>
+            <input type="file" id="pptx-input" accept=".pptx,.ppt" hidden>
+            <span class="field-error" id="pptx-error"></span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Informações do Evento</h2>
+        <div class="field-group">
+
+          <div class="field">
+            <label class="label" for="event-name">Nome do Evento <span class="req">*</span></label>
+            <input type="text" id="event-name" class="input" placeholder="Ex: Treinamento de Segurança do Trabalho">
+            <span class="field-error" id="event-error"></span>
+          </div>
+
+          <div class="field">
+            <label class="label" for="instructor">Ministrante <span class="req">*</span></label>
+            <input type="text" id="instructor" class="input" placeholder="Nome completo do ministrante">
+            <span class="field-error" id="instructor-error"></span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="center-row">
+        <button class="btn btn-primary btn-lg" id="btn-generate" onclick="handleGenerate()">
+          Gerar Certificados
+        </button>
+      </div>
+
+    </div><!-- /form-section -->
+
+    <!-- ── Progress card ── -->
+    <div class="card" id="progress-section" style="display:none">
+      <h2 class="card-title" id="progress-title">Gerando Certificados…</h2>
+      <div class="progress-meta">
+        <span id="progress-label">Iniciando…</span>
+        <span id="progress-pct" class="progress-pct">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="msg-feed" id="msg-feed"></div>
+    </div>
+
+    <!-- ── Result card ── -->
+    <div class="card" id="result-section" style="display:none">
+      <div id="result-summary"></div>
+
+      <div class="action-row" id="result-actions">
+        <button class="btn btn-success" id="btn-download" onclick="handleDownload()">
+          <svg class="btn-svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z"/><path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z"/></svg>
+          Baixar Certificados (ZIP)
+        </button>
+        <button class="btn btn-email" id="btn-email" onclick="handleEmail()">
+          <svg class="btn-svg" viewBox="0 0 20 20" fill="currentColor"><path d="M3 4a2 2 0 0 0-2 2v1.161l8.441 4.221a1.25 1.25 0 0 0 1.118 0L19 7.162V6a2 2 0 0 0-2-2H3Z"/><path d="m19 8.839-7.77 3.885a2.75 2.75 0 0 1-2.46 0L1 8.839V14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.839Z"/></svg>
+          Enviar por E-mail
+        </button>
+        <button class="btn btn-ghost" onclick="handleReset()">
+          <svg class="btn-svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.433a.75.75 0 0 0 0-1.5H3.989a.75.75 0 0 0-.75.75v4.242a.75.75 0 0 0 1.5 0v-2.43l.31.31a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.389Zm1.23-3.723a.75.75 0 0 0 .219-.53V2.929a.75.75 0 0 0-1.5 0V5.36l-.31-.31A7 7 0 0 0 3.239 8.188a.75.75 0 1 0 1.448.389A5.5 5.5 0 0 1 13.89 6.11l.311.31h-2.432a.75.75 0 0 0 0 1.5h4.243a.75.75 0 0 0 .53-.219Z" clip-rule="evenodd"/></svg>
+          Nova Geração
+        </button>
+      </div>
+
+      <!-- Email sub-section -->
+      <div id="email-section" style="display:none">
+        <div class="divider"></div>
+        <h3 class="sub-title">Envio de E-mails</h3>
+        <div class="msg-feed" id="email-feed"></div>
+        <div id="email-result"></div>
+      </div>
+
+    </div><!-- /result-section -->
+
+  </main>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

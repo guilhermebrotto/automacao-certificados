@@ -58,7 +58,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-SMTP_HOST = "172.31.31.112"
+SMTP_HOST = "10.181.30.1"
 SMTP_PORT = 25
 FROM_EMAIL = "automacao@mindworks.com.br"
 ALLOWED_DOMAIN = "@mindworks.com.br"
