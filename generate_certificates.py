@@ -12,7 +12,6 @@ Este script:
 """
 
 import csv
-import os
 import shutil
 import sys
 import smtplib
@@ -33,12 +32,7 @@ except ImportError:
     print("Erro: python-pptx não está instalado. Execute: pip install python-pptx")
     sys.exit(1)
 
-try:
-    from comtypes.client import CreateObject
-except ImportError:
-    print("Aviso: comtypes não está instalado. Execute: pip install comtypes")
-    print("Será tentada apenas a conversão PPTX sem PDF.")
-    CreateObject = None
+import subprocess
 
 # Caminhos base (usados pelo CLI e pelo logging)
 BASE_DIR = Path(__file__).parent
@@ -166,47 +160,24 @@ def find_and_replace_in_pptx(pptx_path, replacements: dict):
 
 
 def convert_pptx_to_pdf(pptx_path, pdf_path):
-    """
-    Converte um arquivo PPTX para PDF usando PowerPoint COM.
-
-    Args:
-        pptx_path (Path): Caminho do arquivo PPTX de entrada
-        pdf_path (Path): Caminho do arquivo PDF de saída
-
-    Returns:
-        bool: True se a conversão foi bem-sucedida
-    """
-    if CreateObject is None:
-        logger.warning("comtypes não disponível - pulando conversão para PDF")
-        logger.info(f"PPTX disponível em: {pptx_path}")
-        return False
-
+    """Converte PPTX para PDF usando LibreOffice headless."""
     try:
-        # Abre o PowerPoint via COM
-        ppt = CreateObject("PowerPoint.Application")
-        ppt.Visible = True  # Deixa visível (workaround para o erro de "Hiding not allowed")
-
-        # Abre a apresentação
-        abs_pptx = os.path.abspath(str(pptx_path))
-        abs_pdf = os.path.abspath(str(pdf_path))
-
-        prs = ppt.Presentations.Open(abs_pptx)
-
-        # Exporta para PDF (formato 32 = ppSaveAsPDF)
-        prs.ExportAsFixedFormat(abs_pdf, 32)
-
-        # Fecha a apresentação
-        prs.Close()
-
-        # Fecha o PowerPoint
-        ppt.Quit()
-
-        logger.info(f"PDF criado com sucesso: {pdf_path}")
+        result = subprocess.run(
+            ['libreoffice', '--headless', '--convert-to', 'pdf',
+             '--outdir', str(pdf_path.parent), str(pptx_path)],
+            capture_output=True, text=True, timeout=60
+        )
+        if result.returncode != 0:
+            logger.error(f"LibreOffice erro: {result.stderr}")
+            return False
+        # LibreOffice nomeia o PDF com o stem do PPTX de entrada
+        generated = pdf_path.parent / (Path(pptx_path).stem + '.pdf')
+        if generated.exists() and generated != pdf_path:
+            generated.rename(pdf_path)
+        logger.info(f"PDF criado: {pdf_path}")
         return True
-
     except Exception as e:
         logger.error(f"Erro ao converter PPTX para PDF: {e}")
-        logger.warning(f"Arquivo PPTX mantido como fallback: {pptx_path}")
         return False
 
 
