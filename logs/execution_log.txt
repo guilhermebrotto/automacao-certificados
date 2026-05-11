@@ -316,3 +316,21 @@
 2026-05-06 16:04:05,790 - INFO - Progresso: 3/3 certificados gerados com sucesso
 2026-05-06 16:04:06,553 - INFO - 127.0.0.1 - - [06/May/2026 16:04:06] "GET /status/cd820ed2-7ed2-41d1-920e-69a538c73663 HTTP/1.1" 200 -
 2026-05-06 16:04:11,076 - INFO - 127.0.0.1 - - [06/May/2026 16:04:11] "GET /download/cd820ed2-7ed2-41d1-920e-69a538c73663 HTTP/1.1" 200 -
+2026-05-11 14:16:02,019 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.100.18:5000
+2026-05-11 14:16:02,019 - INFO - [33mPress CTRL+C to quit[0m
+2026-05-11 14:18:33,078 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.100.18:5000
+2026-05-11 14:18:33,079 - INFO - [33mPress CTRL+C to quit[0m
+2026-05-11 14:19:39,473 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.100.18:5000
+2026-05-11 14:19:39,474 - INFO - [33mPress CTRL+C to quit[0m
+2026-05-11 14:19:45,732 - INFO - 127.0.0.1 - - [11/May/2026 14:19:45] "GET / HTTP/1.1" 200 -
+2026-05-11 14:19:46,096 - INFO - 127.0.0.1 - - [11/May/2026 14:19:46] "GET /static/style.css HTTP/1.1" 200 -
+2026-05-11 14:19:46,198 - INFO - 127.0.0.1 - - [11/May/2026 14:19:46] "GET /static/app.js HTTP/1.1" 200 -
