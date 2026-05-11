@@ -288,3 +288,31 @@
 2026-05-06 12:05:53,520 - INFO - 127.0.0.1 - - [06/May/2026 12:05:53] "GET / HTTP/1.1" 200 -
 2026-05-06 12:05:53,543 - INFO - 127.0.0.1 - - [06/May/2026 12:05:53] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
 2026-05-06 12:05:53,775 - INFO - 127.0.0.1 - - [06/May/2026 12:05:53] "[36mGET /static/app.js HTTP/1.1[0m" 304 -
+2026-05-06 16:03:43,151 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.100.22:5000
+2026-05-06 16:03:43,153 - INFO - [33mPress CTRL+C to quit[0m
+2026-05-06 16:03:44,379 - INFO - 127.0.0.1 - - [06/May/2026 16:03:44] "GET / HTTP/1.1" 200 -
+2026-05-06 16:03:45,090 - INFO - 127.0.0.1 - - [06/May/2026 16:03:45] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2026-05-06 16:03:45,100 - INFO - 127.0.0.1 - - [06/May/2026 16:03:45] "[36mGET /static/app.js HTTP/1.1[0m" 304 -
+2026-05-06 16:03:45,182 - INFO - 127.0.0.1 - - [06/May/2026 16:03:45] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-05-06 16:04:05,539 - INFO - 127.0.0.1 - - [06/May/2026 16:04:05] "POST /gerar HTTP/1.1" 200 -
+2026-05-06 16:04:05,541 - INFO - Diretórios criados/verificados: C:\Users\Usuário\Documents\automacao-certificados\outputs\cd820ed2-7ed2-41d1-920e-69a538c73663, C:\Users\Usuário\Documents\automacao-certificados\uploads\cd820ed2-7ed2-41d1-920e-69a538c73663\.temp_pptx
+2026-05-06 16:04:05,559 - INFO - Total de 3 participantes extraídos do CSV
+2026-05-06 16:04:05,560 - INFO - Iniciando geração de 3 certificados...
+2026-05-06 16:04:05,560 - INFO - [1/3] Gerando certificado para: Jairo Rodrigues Trancoso Junior
+2026-05-06 16:04:05,652 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\uploads\cd820ed2-7ed2-41d1-920e-69a538c73663\.temp_pptx\Jairo_Rodrigues_Trancoso_Junior_temp.pptx
+2026-05-06 16:04:05,661 - ERROR - Erro ao converter PPTX para PDF: [WinError 2] O sistema não pode encontrar o arquivo especificado
+2026-05-06 16:04:05,662 - WARNING - Certificado salvo como PPTX (falha na conversão PDF): C:\Users\Usuário\Documents\automacao-certificados\outputs\cd820ed2-7ed2-41d1-920e-69a538c73663\Certificado_Jairo_Rodrigues_Trancoso_Junior.pptx
+2026-05-06 16:04:05,662 - INFO - [2/3] Gerando certificado para: Luciane Zardini Passamai
+2026-05-06 16:04:05,702 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\uploads\cd820ed2-7ed2-41d1-920e-69a538c73663\.temp_pptx\Luciane_Zardini_Passamai_temp.pptx
+2026-05-06 16:04:05,709 - ERROR - Erro ao converter PPTX para PDF: [WinError 2] O sistema não pode encontrar o arquivo especificado
+2026-05-06 16:04:05,711 - WARNING - Certificado salvo como PPTX (falha na conversão PDF): C:\Users\Usuário\Documents\automacao-certificados\outputs\cd820ed2-7ed2-41d1-920e-69a538c73663\Certificado_Luciane_Zardini_Passamai.pptx
+2026-05-06 16:04:05,711 - INFO - [3/3] Gerando certificado para: Guilherme Silveira Gomes Brotto
+2026-05-06 16:04:05,781 - INFO - PPTX modificado com sucesso: C:\Users\Usuário\Documents\automacao-certificados\uploads\cd820ed2-7ed2-41d1-920e-69a538c73663\.temp_pptx\Guilherme_Silveira_Gomes_Brotto_temp.pptx
+2026-05-06 16:04:05,789 - ERROR - Erro ao converter PPTX para PDF: [WinError 2] O sistema não pode encontrar o arquivo especificado
+2026-05-06 16:04:05,790 - WARNING - Certificado salvo como PPTX (falha na conversão PDF): C:\Users\Usuário\Documents\automacao-certificados\outputs\cd820ed2-7ed2-41d1-920e-69a538c73663\Certificado_Guilherme_Silveira_Gomes_Brotto.pptx
+2026-05-06 16:04:05,790 - INFO - Progresso: 3/3 certificados gerados com sucesso
+2026-05-06 16:04:06,553 - INFO - 127.0.0.1 - - [06/May/2026 16:04:06] "GET /status/cd820ed2-7ed2-41d1-920e-69a538c73663 HTTP/1.1" 200 -
+2026-05-06 16:04:11,076 - INFO - 127.0.0.1 - - [06/May/2026 16:04:11] "GET /download/cd820ed2-7ed2-41d1-920e-69a538c73663 HTTP/1.1" 200 -

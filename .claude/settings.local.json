@@ -11,7 +11,10 @@
       "PowerShell(cd \"C:\\\\Users\\\\Usuário\\\\Documents\\\\automacao-certificados\"; Start-Process -FilePath \".\\\\myenv\\\\Scripts\\\\python.exe\" -ArgumentList \"app_web.py\" -WindowStyle Hidden; Start-Sleep -Seconds 3; try { $r = Invoke-WebRequest -Uri \"http://localhost:5000\" -TimeoutSec 5 -UseBasicParsing; Write-Host \"HTTP $\\($r.StatusCode\\) - OK\" } catch { Write-Host \"Error: $_\" })",
       "PowerShell($r = Invoke-WebRequest -Uri \"http://localhost:5000\" -UseBasicParsing; $r.Content | Select-String \"Gerador de Certificados|btn-generate|progress-section|result-section\" | ForEach-Object { $_.Line.Trim\\(\\) })",
       "PowerShell($css = Invoke-WebRequest -Uri \"http://localhost:5000/static/style.css\" -UseBasicParsing; $js = Invoke-WebRequest -Uri \"http://localhost:5000/static/app.js\" -UseBasicParsing; Write-Host \"CSS: $\\($css.StatusCode\\), JS: $\\($js.StatusCode\\)\")",
-      "PowerShell(Get-Process *)"
+      "PowerShell(Get-Process *)",
+      "Bash(pandoc --version)",
+      "Bash(\"C:/Users/Usuário/Documents/automacao-certificados/myenv/Scripts/python.exe\" -c \"import docx; print\\('ok'\\)\")",
+      "PowerShell(& \"C:\\\\Users\\\\Usuário\\\\Documents\\\\automacao-certificados\\\\myenv\\\\Scripts\\\\pip.exe\" install python-docx --quiet)"
     ]
   }
 }
