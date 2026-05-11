@@ -1,8 +1,11 @@
 services:
   cert-generator:
-    build: .
+    image: cert-generator:latest
     ports:
       - "5000:5000"
     restart: unless-stopped
     volumes:
-      - ./logs:/app/logs
+      - cert_logs:/app/logs
+
+volumes:
+  cert_logs:
